@@ -34,7 +34,7 @@
         android:layout_marginLeft="459dp"
         android:background="@android:color/transparent" />
 
-    <TextView
+    <EditText
         android:id="@+id/typeName"
         android:layout_width="100dp"
         android:layout_height="30dp"

@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class FreeModeTypeName extends ActionBarActivity {
@@ -15,7 +16,7 @@ public class FreeModeTypeName extends ActionBarActivity {
 
     Button returnBtn;
     Button confirmBtn;
-    TextView typeName;
+    EditText typeName;
 
 
     @Override
@@ -25,7 +26,7 @@ public class FreeModeTypeName extends ActionBarActivity {
 
         returnBtn= (Button)findViewById(R.id.returnBtn);
         confirmBtn= (Button)findViewById(R.id.confirmBtn);
-        typeName= (TextView)findViewById(R.id.typeName);
+        typeName= (EditText)findViewById(R.id.typeName);
 
 
         returnBtn.setOnClickListener(new View.OnClickListener() {
