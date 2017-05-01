@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ScrollView;
@@ -29,6 +30,8 @@ public class InstrAnimal extends BlunoLibrary{
     TextView textView;
     Button nextBtn;
     Handler mHandler;
+    int flag = 0;
+    String formerString = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +62,9 @@ public class InstrAnimal extends BlunoLibrary{
         discoverBtn= (Button)findViewById(R.id.discoverBtn);
         nextBtn = (Button) findViewById(R.id.nextBtn);
         textView = (TextView) findViewById(R.id.textView);
-        nextBtn.setEnabled(false);
+        if(flag==0) {
+            nextBtn.setEnabled(false);
+        }
 
 
         returnBtn.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +86,17 @@ public class InstrAnimal extends BlunoLibrary{
         });
 
         Toast.makeText(this, "Hello World", Toast.LENGTH_SHORT).show();
+
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nextBtn.setEnabled(false);
+                if (flag!=0){
+                    nextBtn.setEnabled(true);
+                    --flag;
+                }
+            }
+        });
 
 
         mHandler = new Handler() {
@@ -205,38 +221,58 @@ public class InstrAnimal extends BlunoLibrary{
     public void onSerialReceived(String theString) {
         textView.append(theString);
         // to know which body part is connected
-        bodypartAssembedCheck[0] = true;
-        theString=theString.trim();
-        String output[]=theString.split(",");
+        //bodypartAssembedCheck[0] = true;
 
-        int partArray[]=new int[output.length];
-        for(int i=0;i<output.length;i++){
-            partArray[i]=Integer.parseInt(output[i]);
-        }
-        for(int i=0;i<partArray.length;i++){
-            switch (partArray[i]){
-                case 0:
-                    bodypartAssembedCheck[0]=true;
-                    break;
-                case 1:
-                    bodypartAssembedCheck[1]=true;
-                    break;
-                case 2:
-                    bodypartAssembedCheck[2]=true;
-                    break;
-                case 3:
-                    bodypartAssembedCheck[3]=true;
-                    break;
-                case 4:
-                    bodypartAssembedCheck[4]=true;
-                    break;
-                case 5:
-                    bodypartAssembedCheck[5]=true;
-                    break;
-                default:
-                    break;
+        theString=theString.trim();
+        if(!formerString.equals(theString)) {
+            String output[] = theString.split(",");
+            int partArray[] = new int[output.length];
+            for (int i = 0; i < output.length; i++) {
+                partArray[i] = Integer.parseInt(output[i]);
             }
+            for (int i = 0; i < partArray.length; i++) {
+                switch (partArray[i]) {
+                    case 0:
+                        bodypartAssembedCheck[0] = true;
+                        flag=1;
+                        nextBtn.setEnabled(true);
+                        Log.d("value",flag+"");
+                        break;
+                    case 1:
+                        bodypartAssembedCheck[1] = true;
+                        flag=1;
+                        nextBtn.setEnabled(true);
+                        Log.d("value",flag+"");
+                        break;
+                    case 2:
+                        bodypartAssembedCheck[2] = true;
+                        flag=1;
+                        nextBtn.setEnabled(true);
+                        Log.d("value",flag+"");
+                        break;
+                    case 3:
+                        bodypartAssembedCheck[3] = true;
+                        flag=1;
+                        nextBtn.setEnabled(true);
+                        Log.d("value",flag+"");
+                        break;
+                    case 4:
+                        bodypartAssembedCheck[4] = true;
+                        flag=1;
+                        nextBtn.setEnabled(true);
+                        break;
+                    case 5:
+                        bodypartAssembedCheck[5] = true;
+                        flag=1;
+                        nextBtn.setEnabled(true);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
         }
+        formerString = theString;
 
 
 
