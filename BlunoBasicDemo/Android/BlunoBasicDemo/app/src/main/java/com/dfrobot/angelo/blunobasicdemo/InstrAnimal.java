@@ -85,7 +85,6 @@ public class InstrAnimal extends BlunoLibrary{
             }
         });
 
-        Toast.makeText(this, "Hello World", Toast.LENGTH_SHORT).show();
 
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,7 +122,7 @@ public class InstrAnimal extends BlunoLibrary{
     }
 
 
-    public void finalcheck() {
+    public void finalCheck() {
         int result = 0;
         ArrayList<Integer> incompletedArrayList = new ArrayList<Integer>();
         String[] bodyPartName = {"head", "right Hand", "left Hand", "right foot", "left foot", "tail"};
@@ -274,8 +273,6 @@ public class InstrAnimal extends BlunoLibrary{
         }
         formerString = theString;
 
-
-
       }
 
     private void checkStage() {
@@ -286,8 +283,8 @@ public class InstrAnimal extends BlunoLibrary{
             public void run() {
                 Message msg =new Message();
                 msg.obj=true;
-
-//                //耗时操作，完成之后发送消息给Handler，完成UI更新；
+//
+////                //耗时操作，完成之后发送消息给Handler，完成UI更新；
 //                mHandler.sendEmptyMessage(0);
 //                int count = 0;
 //                Message msg =new Message();
