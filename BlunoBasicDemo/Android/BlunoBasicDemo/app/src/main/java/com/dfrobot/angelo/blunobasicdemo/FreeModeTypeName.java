@@ -17,6 +17,7 @@ public class FreeModeTypeName extends ActionBarActivity {
     Button returnBtn;
     Button confirmBtn;
     EditText typeName;
+    Editable nameEdit;
 
 
     @Override
@@ -44,48 +45,33 @@ public class FreeModeTypeName extends ActionBarActivity {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(FreeModeTypeName.this,ObjCompletedPage.class);
+
+                intent.putExtra("Name", String.valueOf(nameEdit));
+
                 startActivity(intent);
+
+
             }
         });
 
 
-        editText.TextChanged += (object sender, Android.Text.TextChangedEventArgs e) => {
+        typeName.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
 
-            textView.Text = e.Text.ToString ();
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
 
-        };
+                if (hasFocus) {
 
-        typeName.addTextChangedListener(new TextWatcher() {
+                    nameEdit=typeName.getText(); // 获得焦点
 
-            public void afterTextChanged(Editable s) {
+                } else {
 
-               String name= typeName.getText().toString();
+                    // 失去焦点
+                }
 
             }
 
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
         });
-
-//        typeName.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View arg0) {
-////调到拨号界面
-//                Character uri = Character.getName("af");
-//                Intent intent = new Intent(Intent.ACTION_DIAL, uri);
-//                startActivity(intent);
-//            }
-//        });
-
-
-
-
-
-//        typeName.addTextChangedListener(new TextView.OnEditorActionListener(
-//
-//        ){});
-
 
 
 

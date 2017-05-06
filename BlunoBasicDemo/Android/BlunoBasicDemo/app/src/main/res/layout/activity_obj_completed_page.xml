@@ -35,4 +35,10 @@
         android:layout_marginLeft="454dp"
         android:background="@android:color/transparent" />
 
+    <TextView
+        android:id="@+id/nameArea"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="100dp"/>
+
 </RelativeLayout>

@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class FreeModeRecording extends BlunoLibrary {
 
     Button returnBtn;
@@ -39,6 +41,8 @@ public class FreeModeRecording extends BlunoLibrary {
             }
         });
 
+
+        // waiting to write jump pages
         prevBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,24 +86,24 @@ public class FreeModeRecording extends BlunoLibrary {
     protected void onResume() {
         super.onResume();
         System.out.println("BlUNOActivity onResume");
-        onResumeProcess();                                                        //onResume Process by BlunoLibrary
+        //onResumeProcess();                                                        //onResume Process by BlunoLibrary
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        onPauseProcess();                                                        //onPause Process by BlunoLibrary
+       // onPauseProcess();                                                        //onPause Process by BlunoLibrary
     }
 
     protected void onStop() {
         super.onStop();
-        onStopProcess();                                                        //onStop Process by BlunoLibrary
+        //onStopProcess();                                                        //onStop Process by BlunoLibrary
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        onDestroyProcess();                                                        //onDestroy Process by BlunoLibrary
+        //onDestroyProcess();                                                        //onDestroy Process by BlunoLibrary
     }
 
     @Override
@@ -128,54 +132,91 @@ public class FreeModeRecording extends BlunoLibrary {
     }
 
     @Override
-    public void onSerialReceived(String theString) {
-      textView.append(theString);
+    public void onSerialReceived(String theString){
+        //这里要看arduino代码对于每个电阻的设置
+        //0-5 是位置。 具体内容是voltage？？？或者1-voltage 这样
+        //voltage checked in arduino code so that the sending data will be 0.c0,1.c1,
+        textView.append(theString);
         theString=theString.trim();
         String output[] = theString.split(",");
-        int partArray[] = new int[output.length];
+
+        // every partArray[0] is something like 0.c1
+        String partArray[] = new String[output.length];
         for (int i = 0; i < output.length; i++) {
-            partArray[i] = Integer.parseInt(output[i]);
+            partArray[i] = String.valueOf(output[i]);
         }
+
+        ArrayList <Integer> partCompleted=new ArrayList<Integer>();
+        ArrayList <String> specifcPartAdded=new ArrayList<String>();
+
+        //this array record every part of the object people created: 0.c0
+        for (int i = 0; i < output.length; i++) {
+            String everyPartRecording[] = theString.split(".");
+            // temp[] is something like temp[0]=0  temp[1]=c0
+            String temp[] = new String[everyPartRecording.length];
+            //partCompleted is the all the part completed (from the data send from arduino)
+            partCompleted.add(Integer.parseInt(temp[0]));
+            //specifcPartAdded is the specific which thing are assembed like c1(cat 1 )
+            specifcPartAdded.add(temp[1]);
+
+        }
+
+        // all the parts are completed and recorded
+        //if 6 parts are connected, show the type name page
+        if(partCompleted.size() == 6){
+
+            Intent intent = new Intent();
+            intent.setClass(FreeModeRecording.this, FreeModeTypeName.class);
+            //waiting to send the data partCompleted[] and specifcPartAdded[]
+            // to the FreeModeTypeName
+            startActivity(intent);
+
+        }
+
+
+//        String everyPartRecording[]=new String[output.length];
+
+//        for (int i = 0; i < output.length; i++) {
+//            partArray[i] = Integer.parseInt(output[i]);
+//        }
+
+
 //check which one samll part is connected in Bluno
-        for (int i = 0; i < partArray.length; i++) {
-            switch (partArray[i]) {
-                case 0:
-                    bodypartAssembedCheck[0] = true;
-                    break;
-                case 1:
-                    bodypartAssembedCheck[1] = true;
-                    break;
-                case 2:
-                    bodypartAssembedCheck[2] = true;
-                    break;
-                case 3:
-                    bodypartAssembedCheck[3] = true;
-                    break;
-                case 4:
-                    bodypartAssembedCheck[4] = true;
-                case 5:
-                    bodypartAssembedCheck[5] = true;
-                default:
-                    break;
-            }
-        }
+//        for (int i = 0; i < partArray.length; i++) {
+//            switch (partArray[i]) {
+//                case 0:
+//                    bodypartAssembedCheck[0] = true;
+//                    break;
+//                case 1:
+//                    bodypartAssembedCheck[1] = true;
+//                    break;
+//                case 2:
+//                    bodypartAssembedCheck[2] = true;
+//                    break;
+//                case 3:
+//                    bodypartAssembedCheck[3] = true;
+//                    break;
+//                case 4:
+//                    bodypartAssembedCheck[4] = true;
+//                case 5:
+//                    bodypartAssembedCheck[5] = true;
+//                default:
+//                    break;
+//            }
+//        }
 
-        int i=0;
-
-        while(i<6 && bodypartAssembedCheck[i]==true){
-            i++;
-        }
-
-        Intent intent = new Intent();
-        intent.setClass(FreeModeRecording.this, FreeModeTypeName.class);
-        startActivity(intent);
-
-
-
-
-
-
-
+        //if 6 parts are connected, show the type name page
+//        for(int i=0;i<6; i++){
+//            if( bodypartAssembedCheck[i]==true){
+//
+//                Intent intent = new Intent();
+//                intent.setClass(FreeModeRecording.this, FreeModeTypeName.class);
+//                startActivity(intent);
+//            }
+//            else{
+//
+//            }
+//        }
 
 
     }// end onSerialReceived

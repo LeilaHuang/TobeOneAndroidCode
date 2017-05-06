@@ -41,7 +41,8 @@
         android:layout_marginTop="275dp"
         android:layout_marginLeft="325dp"
         android:textSize="20dp"
-        android:clickable="true"/>
+        android:clickable="true"
+        android:selectAllOnFocus="true"/>
 
 
 

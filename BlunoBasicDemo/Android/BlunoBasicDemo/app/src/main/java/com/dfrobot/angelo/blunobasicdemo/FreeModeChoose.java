@@ -34,10 +34,12 @@ public class FreeModeChoose extends ActionBarActivity {
         createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(FreeModeChoose.this,FreeModeRecording.class);
-                startActivity(intent);
+                Intent intent2 = new Intent();
+                intent2.setClass(FreeModeChoose.this,FreeModeRecording.class);
+                startActivity(intent2);
             }
         });
+
+
     }
 }
